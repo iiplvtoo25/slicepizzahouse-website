@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slice House - Promotions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Custom styles for promotions page */
+        
+        /* CLEAR Picture-only banner - 85% of screen height, no overlay */
+        .page-hero {
+            height: 85vh !important;
+            min-height: 500px !important;
+            margin-bottom: 40px !important;
+            background: url('promot-pizza.png') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+        }
+        
+        /* Hide hero content - picture only */
+        .page-hero-content {
+            display: none !important;
+        }
+        
+        /* COMBO DEALS - FAMILY COMBO PICTURE ON RIGHT */
+        .combo-section {
+            margin: 40px 0;
+        }
+        
+        .horizontal-combo-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* Border around the entire combo square */
+        .horizontal-combo-row {
+            display: flex;
+            align-items: stretch;
+            height: 400px;
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+            transition: transform 0.3s ease;
+            position: relative;
+            border: 2px solid var(--border-color);
+        }
+        
+        /* FAMILY COMBO - PICTURE ON RIGHT */
+        .horizontal-combo-row.reverse {
+            flex-direction: row-reverse;
+            border: 2px solid var(--maroon);
+        }
+        
+        .horizontal-combo-row:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-color: var(--maroon);
+        }
+        
+        .horizontal-combo-row.reverse:hover {
+            border-color: var(--light-maroon);
+            box-shadow: 0 10px 25px rgba(128, 0, 0, 0.15);
+        }
+        
+        /* Image styling */
+        .combo-image-horizontal {
+            flex: 0 0 38%;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Border between image and content */
+        .horizontal-combo-row .combo-image-horizontal {
+            border-right: 2px solid var(--border-color);
+        }
+        
+        /* FAMILY COMBO - Border on left side since image is on right */
+        .horizontal-combo-row.reverse .combo-image-horizontal {
+            border-right: none;
+            border-left: 2px solid var(--border-color);
+        }
+        
+        .combo-image-horizontal img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+        
+        /* Add an inner border effect to the image */
+        .combo-image-horizontal::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            pointer-events: none;
+        }
+        
+        .horizontal-combo-row:hover .combo-image-horizontal img {
+            transform: scale(1.05);
+        }
+        
+        /* Content area */
+        .combo-details-horizontal {
+            flex: 0 0 62%;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+            overflow: hidden;
+            justify-content: space-between;
+            position: relative;
+        }
+        
+        /* Typography */
+        .combo-details-horizontal h3 {
+            font-size: 24px;
+            color: var(--maroon);
+            margin-bottom: 10px;
+            line-height: 1.2;
+            position: relative;
+            padding-bottom: 8px;
+        }
+        
+        /* Add a subtle underline to titles */
+        .combo-details-horizontal h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--maroon);
+        }
+        
+        .combo-price-horizontal {
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--black);
+            margin-bottom: 15px;
+            line-height: 1;
+        }
+        
+        /* Lists with subtle dividers */
+        .combo-details-horizontal ul {
+            list-style: none;
+            margin: 0 0 15px 0;
+            padding: 0;
+            flex-grow: 1;
+        }
+        
+        .combo-details-horizontal ul li {
+            padding: 6px 0;
+            color: var(--text-dark);
+            position: relative;
+            padding-left: 22px;
+            font-size: 14px;
+            line-height: 1.3;
+            border-bottom: 1px dotted var(--border-color);
+        }
+        
+        .combo-details-horizontal ul li:last-child {
+            border-bottom: none;
+        }
+        
+        .combo-details-horizontal ul li:before {
+            content: '✓';
+            color: var(--maroon);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .combo-save-horizontal {
+            background: rgba(128, 0, 0, 0.1);
+            color: var(--maroon);
+            font-weight: 700;
+            padding: 6px 15px;
+            border-radius: 12px;
+            display: inline-block;
+            font-size: 14px;
+            margin-bottom: 12px;
+            align-self: flex-start;
+            border: 1px solid rgba(128, 0, 0, 0.2);
+        }
+        
+        /* Popular badge with border - ALWAYS ON RIGHT SIDE */
+        .popular-badge-horizontal {
+            background: var(--maroon);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 12px;
+            display: inline-block;
+            margin-bottom: 10px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 2;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Button with border - UPDATED to work with cart */
+        .combo-btn-horizontal {
+            background: var(--maroon);
+            color: white;
+            border: 2px solid var(--maroon);
+            padding: 10px 22px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            align-self: flex-start;
+            margin-top: auto;
+            min-width: 140px;
+            box-shadow: 0 4px 8px rgba(128, 0, 0, 0.15);
+        }
+        
+        .combo-btn-horizontal:hover {
+            background: var(--light-maroon);
+            border-color: var(--light-maroon);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(128, 0, 0, 0.2);
+        }
+        
+        /* Cart styles */
+        .cart-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            width: 350px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            padding: 20px;
+            display: none;
+            border: 2px solid var(--maroon);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .cart-container.show {
+            display: block;
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .cart-header h3 {
+            color: var(--maroon);
+            font-size: 22px;
+            margin: 0;
+        }
+        
+        .cart-count {
+            background: var(--maroon);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .cart-items {
+            margin-bottom: 20px;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cart-item-info h4 {
+            margin: 0 0 5px 0;
+            color: var(--black);
+            font-size: 16px;
+        }
+        
+        .cart-item-info p {
+            margin: 0;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        .cart-item-price {
+            font-weight: 700;
+            color: var(--maroon);
+            font-size: 16px;
+        }
+        
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .cart-item-quantity button {
+            background: var(--border-color);
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+        
+        .cart-item-quantity button:hover {
+            background: var(--maroon);
+            color: white;
+        }
+        
+        .cart-item-quantity span {
+            min-width: 20px;
+            text-align: center;
+        }
+        
+        .remove-item {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 2px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        
+        .cart-total h4 {
+            color: var(--black);
+            margin: 0;
+        }
+        
+        .cart-total-price {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--maroon);
+        }
+        
+        .cart-empty {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text-light);
+        }
+        
+        .cart-empty i {
+            font-size: 40px;
+            color: var(--border-color);
+            margin-bottom: 15px;
+        }
+        
+        .cart-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .cart-btn {
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .cart-btn-primary {
+            background: var(--maroon);
+            color: white;
+        }
+        
+        .cart-btn-primary:hover {
+            background: var(--light-maroon);
+        }
+        
+        .cart-btn-secondary {
+            background: var(--border-color);
+            color: var(--text-dark);
+        }
+        
+        .cart-btn-secondary:hover {
+            background: var(--text-light);
+            color: white;
+        }
+        
+        .cart-toggle {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--maroon);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 4px 12px rgba(128, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .cart-toggle:hover {
+            background: var(--light-maroon);
+            transform: scale(1.1);
+        }
+        
+        .cart-toggle-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: white;
+            color: var(--maroon);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px solid var(--maroon);
+        }
+        
+        /* Order form modal updates */
+        .delivery-options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .delivery-option {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .delivery-option input {
+            display: none;
+        }
+        
+        .delivery-option label {
+            display: block;
+            padding: 15px;
+            background: var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .delivery-option input:checked + label {
+            background: var(--maroon);
+            color: white;
+            border-color: var(--maroon);
+        }
+        
+        .delivery-option label:hover {
+            background: var(--text-light);
+            color: white;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .horizontal-combo-container {
+                max-width: 850px;
+            }
+            
+            .horizontal-combo-row {
+                height: 380px;
+            }
+            
+            .combo-image-horizontal {
+                height: 380px;
+            }
+            
+            .combo-details-horizontal {
+                height: 380px;
+                padding: 25px;
+            }
+            
+            .popular-badge-horizontal {
+                top: 18px;
+                right: 18px;
+            }
+            
+            .cart-container {
+                width: 320px;
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .horizontal-combo-container {
+                max-width: 800px;
+            }
+            
+            .horizontal-combo-row {
+                height: 360px;
+                border-width: 1.5px;
+            }
+            
+            .combo-image-horizontal {
+                flex: 0 0 35%;
+                height: 360px;
+            }
+            
+            .combo-details-horizontal {
+                flex: 0 0 65%;
+                height: 360px;
+                padding: 22px;
+            }
+            
+            .combo-details-horizontal h3 {
+                font-size: 22px;
+            }
+            
+            .combo-price-horizontal {
+                font-size: 28px;
+            }
+            
+            .combo-details-horizontal ul li {
+                font-size: 13px;
+            }
+            
+            .popular-badge-horizontal {
+                top: 16px;
+                right: 16px;
+            }
+            
+            .cart-container {
+                width: 300px;
+                right: 15px;
+            }
+            
+            .cart-toggle {
+                right: 15px;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .horizontal-combo-container {
+                max-width: 95%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-hero {
+                height: 70vh !important;
+            }
+            
+            .horizontal-combo-container {
+                max-width: 100%;
+            }
+            
+            .horizontal-combo-row,
+            .horizontal-combo-row.reverse {
+                flex-direction: column;
+                height: 480px;
+                min-height: 480px;
+                border-width: 2px;
+            }
+            
+            .combo-image-horizontal {
+                flex: 0 0 180px;
+                height: 180px;
+                width: 100%;
+                border-right: none !important;
+                border-left: none !important;
+                border-bottom: 2px solid var(--border-color);
+            }
+            
+            /* Family combo border on mobile */
+            .horizontal-combo-row.reverse .combo-image-horizontal {
+                border-bottom: 2px solid var(--maroon);
+            }
+            
+            .combo-details-horizontal {
+                flex: 1;
+                height: 300px;
+                min-height: 300px;
+                padding: 22px;
+            }
+            
+            /* Popular badge position on mobile */
+            .popular-badge-horizontal {
+                top: 12px;
+                right: 12px;
+            }
+            
+            .combo-btn-horizontal {
+                min-width: 130px;
+                padding: 9px 20px;
+            }
+            
+            /* Cart adjustments for mobile */
+            .cart-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+                max-height: 100vh;
+            }
+            
+            .cart-toggle {
+                top: auto;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .page-hero {
+                height: 60vh !important;
+            }
+            
+            .horizontal-combo-row {
+                height: 440px;
+            }
+            
+            .combo-image-horizontal {
+                height: 160px;
+            }
+            
+            .combo-details-horizontal {
+                height: 280px;
+                padding: 18px;
+            }
+            
+            .combo-details-horizontal h3 {
+                font-size: 20px;
+            }
+            
+            .combo-price-horizontal {
+                font-size: 26px;
+            }
+            
+            .combo-details-horizontal ul li {
+                font-size: 12px;
+                padding-left: 20px;
+            }
+            
+            .combo-btn-horizontal {
+                min-width: 120px;
+                padding: 8px 18px;
+                font-size: 13px;
+            }
+            
+            .popular-badge-horizontal {
+                top: 10px;
+                right: 10px;
+                font-size: 11px;
+                padding: 4px 12px;
+            }
+            
+            .delivery-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-img">
+                    <i class="fas fa-pizza-slice"></i>
+                </div>
+                <div class="logo-text">SLICE<span>HOUSE</span></div>
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="promotions.html" class="active">Promotions</a></li>
+                    <li><a href="locations.html">Locate Us</a></li>
+                    <li><button class="order-online-btn" id="orderOnlineBtn">Order Online</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- CLEAR Picture-only Banner - 85% screen height, no overlay -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <!-- Content is hidden - picture only -->
+        </div>
+    </section>
+    
+    <!-- Main Promotions Content -->
+    <main class="container">
+        <!-- Student Promotions -->
+        <section class="promo-section">
+            <h2 class="section-title">Student Promotions</h2>
+            <div class="promo-card highlight">
+                <div class="promo-header">
+                    <div class="promo-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="promo-title">Exclusive Student Deals</h3>
+                </div>
+                <p style="margin-bottom: 20px; color: var(--text-dark);">Present your valid student ID to enjoy these special offers:</p>
+                <ul class="promo-list">
+                    <li><strong>20% OFF</strong> on all regular-sized pizzas every Monday-Thursday</li>
+                    <li><strong>FREE</strong> medium drink with any large pizza purchase</li>
+                    <li><strong>Buy 1 Get 1 Free</strong> on personal pizzas every Wednesday</li>
+                    <li><strong>Extra topping</strong> at no additional cost with student voucher</li>
+                    <li><strong>10% OFF</strong> your entire order when you show your student ID</li>
+                </ul>
+                <p style="color: var(--text-light); font-size: 14px; margin-top: 20px;">*Valid student ID required. Cannot be combined with other offers. Some restrictions may apply.</p>
+            </div>
+        </section>
+        
+        <!-- Daily Deals -->
+        <section class="promo-section">
+            <h2 class="section-title">Daily Specials</h2>
+            <div class="promo-grid">
+                <div class="promo-item">
+                    <div class="promo-day">Monday</div>
+                    <h3>Meat Lover's Monday</h3>
+                    <p>All meat pizzas 15% off</p>
+                </div>
+                <div class="promo-item">
+                    <div class="promo-day">Tuesday</div>
+                    <h3>Two for Tuesday</h3>
+                    <p>Buy 1 regular pizza, get 50% off second pizza</p>
+                </div>
+                <div class="promo-item">
+                    <div class="promo-day">Wednesday</div>
+                    <h3>Student Wednesday</h3>
+                    <p>BOGO on personal pizzas for students</p>
+                </div>
+                <div class="promo-item">
+                    <div class="promo-day">Thursday</div>
+                    <h3>Throwback Thursday</h3>
+                    <p>Classic cheese pizza at 1990s prices: $9.90</p>
+                </div>
+                <div class="promo-item">
+                    <div class="promo-day">Friday</div>
+                    <h3>Family Friday</h3>
+                    <p>Family combo (2 large + 2 drinks) for $44.90</p>
+                </div>
+                <div class="promo-item">
+                    <div class="promo-day">Weekend</div>
+                    <h3>Weekend Feast</h3>
+                    <p>Party pack special: 3 large pizzas + 4 drinks = $65.90</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- HORIZONTAL COMBO DEALS - FAMILY COMBO PICTURE ON RIGHT, BADGE ON RIGHT -->
+        <section class="promo-section combo-section">
+            <h2 class="section-title">Combo Deals</h2>
+            
+            <div class="horizontal-combo-container">
+                <!-- Student Combo - Picture LEFT, Details RIGHT -->
+                <div class="horizontal-combo-row">
+                    <div class="combo-image-horizontal">
+                        <img src="Red-pizza.png" alt="Student Combo Pizza">
+                    </div>
+                    <div class="combo-details-horizontal">
+                        <h3>Student Combo</h3>
+                        <div class="combo-price-horizontal">$24.90</div>
+                        <ul>
+                            <li>1 Regular Pizza</li>
+                            <li>1 Medium Drink</li>
+                            <li>1 Garlic Bread</li>
+                            <li>Perfect for quick meals</li>
+                        </ul>
+                        <p class="combo-save-horizontal">Save $7.50</p>
+                        <button class="combo-btn-horizontal" data-combo="student-combo" data-price="24.90" data-name="Student Combo">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- FAMILY COMBO - Picture RIGHT, Details LEFT, Badge RIGHT -->
+                <div class="horizontal-combo-row reverse">
+                    <div class="combo-image-horizontal">
+                        <img src="familypizza.png" alt="Family Combo Pizza">
+                    </div>
+                    <div class="combo-details-horizontal">
+                        <div class="popular-badge-horizontal">MOST POPULAR</div>
+                        <h3>Family Combo</h3>
+                        <div class="combo-price-horizontal">$59.90</div>
+                        <ul>
+                            <li>2 Large Pizzas</li>
+                            <li>2 Medium Drinks</li>
+                            <li>1 Garlic Bread</li>
+                            <li>1 Dessert</li>
+                        </ul>
+                        <p class="combo-save-horizontal">Save $17.20</p>
+                        <button class="combo-btn-horizontal" data-combo="family-combo" data-price="59.90" data-name="Family Combo">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Buy 2 Free 1 - Picture LEFT, Details RIGHT -->
+                <div class="horizontal-combo-row">
+                    <div class="combo-image-horizontal">
+                       <img src="Free-pizza.png" alt="Party Pack Pizza">
+                    </div>
+                    <div class="combo-details-horizontal">
+                        <h3>Free Deals</h3>
+                        <div class="combo-price-horizontal">$49.90</div>
+                        <ul>
+                            <li>2 Large Pizzas</li>
+                            <li>Free 1 Pizza</li>
+                        </ul>
+                        <p class="combo-save-horizontal">Save $19.90</p>
+                        <button class="combo-btn-horizontal" data-combo="Free-pack" data-price="49.90" data-name="Buy 2 Free 1">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Voucher Information -->
+        <section class="promo-section">
+            <div class="voucher-info">
+                <h3><i class="fas fa-ticket-alt"></i> How to Use Vouchers</h3>
+                <ol>
+                    <li>Present your student ID or voucher code at the counter</li>
+                    <li>Mention the promotion you want to use</li>
+                    <li>For online orders, enter voucher code at checkout</li>
+                    <li>One voucher per transaction</li>
+                    <li>Vouchers cannot be combined with other offers</li>
+                </ol>
+                <a href="locations.html" class="hero-btn" style="margin-top: 20px;">Visit Us to Redeem</a>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                <div class="logo-img" style="width: 40px; height: 40px;">
+                    <i class="fas fa-pizza-slice"></i>
+                </div>
+                <div class="logo-text" style="font-size: 22px;">SLICE<span>HOUSE</span></div>
+            </div>
+            
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="menu.html">Menu</a>
+                <a href="promotions.html">Promotions</a>
+                <a href="locations.html">Locations</a>
+                <a href="#" id="footerOrderBtn">Order Online</a>
+            </div>
+            
+            <p class="copyright">© 2023 Slice House. All Rights Reserved.</p>
+           
+        </div>
+    </footer>
+    
+    <!-- Cart Toggle Button -->
+    <div class="cart-toggle" id="cartToggle">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-toggle-count" id="cartCount">0</span>
+    </div>
+    
+    <!-- Cart Container -->
+    <div class="cart-container" id="cartContainer">
+        <div class="cart-header">
+            <h3>Your Order</h3>
+            <span class="cart-count" id="cartTotalCount">0</span>
+        </div>
+        
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be dynamically added here -->
+            <div class="cart-empty" id="cartEmpty">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Your cart is empty</p>
+                <p>Add items from our combo deals!</p>
+            </div>
+        </div>
+        
+        <div class="cart-total" id="cartTotalSection" style="display: none;">
+            <h4>Total:</h4>
+            <span class="cart-total-price" id="cartTotalPrice">$0.00</span>
+        </div>
+        
+        <div class="cart-actions" id="cartActions" style="display: none;">
+            <button class="cart-btn cart-btn-secondary" id="clearCart">Clear Cart</button>
+            <button class="cart-btn cart-btn-primary" id="checkoutBtn">Proceed to Checkout</button>
+        </div>
+    </div>
+    
+    <!-- Order Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Complete Your Order</h2>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="name">Your Name *</label>
+                    <input type="text" id="name" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" placeholder="Enter your phone number" required>
+                </div>
+                
+                <div class="delivery-options">
+                    <div class="delivery-option">
+                        <input type="radio" id="delivery" name="deliveryType" value="delivery" checked>
+                        <label for="delivery">
+                            <i class="fas fa-truck"></i><br>
+                            Delivery
+                        </label>
+                    </div>
+                    <div class="delivery-option">
+                        <input type="radio" id="dinein" name="deliveryType" value="dinein">
+                        <label for="dinein">
+                            <i class="fas fa-utensils"></i><br>
+                            Dine In
+                        </label>
+                    </div>
+                    <div class="delivery-option">
+                        <input type="radio" id="pickup" name="deliveryType" value="pickup">
+                        <label for="pickup">
+                            <i class="fas fa-store"></i><br>
+                            Pickup
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="addressField">
+                    <label for="address">Delivery Address *</label>
+                    <textarea id="address" rows="3" placeholder="Enter your delivery address" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="orderNotes">Order Notes (Optional)</label>
+                    <textarea id="orderNotes" rows="2" placeholder="Special instructions, allergies, etc."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="voucher">Voucher Code (Optional)</label>
+                    <input type="text" id="voucher" placeholder="Enter voucher code if any">
+                </div>
+                
+                <div class="order-summary" id="orderSummary">
+                    <!-- Order summary will be added here -->
+                </div>
+                
+                <button type="submit" class="submit-order-btn">Place Order Now</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Cart Management System
+        let cart = [];
+        
+        // Initialize cart from localStorage
+        function loadCart() {
+            const savedCart = localStorage.getItem('sliceHouseCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartDisplay();
+            }
+        }
+        
+        // Save cart to localStorage
+        function saveCart() {
+            localStorage.setItem('sliceHouseCart', JSON.stringify(cart));
+        }
+        
+        // Add item to cart
+        function addToCart(comboId, comboName, comboPrice) {
+            // Check if item already exists in cart
+            const existingItemIndex = cart.findIndex(item => item.id === comboId);
+            
+            if (existingItemIndex > -1) {
+                // Increase quantity
+                cart[existingItemIndex].quantity += 1;
+            } else {
+                // Add new item
+                cart.push({
+                    id: comboId,
+                    name: comboName,
+                    price: parseFloat(comboPrice),
+                    quantity: 1
+                });
+            }
+            
+            saveCart();
+            updateCartDisplay();
+            showNotification(`${comboName} added to cart!`);
+        }
+        
+        // Remove item from cart
+        function removeFromCart(comboId) {
+            const itemIndex = cart.findIndex(item => item.id === comboId);
+            if (itemIndex > -1) {
+                cart.splice(itemIndex, 1);
+                saveCart();
+                updateCartDisplay();
+            }
+        }
+        
+        // Update item quantity
+        function updateQuantity(comboId, newQuantity) {
+            if (newQuantity < 1) {
+                removeFromCart(comboId);
+                return;
+            }
+            
+            const itemIndex = cart.findIndex(item => item.id === comboId);
+            if (itemIndex > -1) {
+                cart[itemIndex].quantity = newQuantity;
+                saveCart();
+                updateCartDisplay();
+            }
+        }
+        
+        // Clear cart
+        function clearCart() {
+            cart = [];
+            saveCart();
+            updateCartDisplay();
+            showNotification('Cart cleared');
+        }
+        
+        // Calculate cart total
+        function calculateTotal() {
+            return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+        }
+        
+        // Update cart display
+        function updateCartDisplay() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartEmpty = document.getElementById('cartEmpty');
+            const cartTotalSection = document.getElementById('cartTotalSection');
+            const cartActions = document.getElementById('cartActions');
+            const cartTotalPrice = document.getElementById('cartTotalPrice');
+            const cartTotalCount = document.getElementById('cartTotalCount');
+            const cartCount = document.getElementById('cartCount');
+            
+            // Update count indicators
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            cartTotalCount.textContent = totalItems;
+            
+            // Clear current items
+            cartItemsContainer.innerHTML = '';
+            
+            if (cart.length === 0) {
+                // Show empty cart message
+                cartEmpty.style.display = 'block';
+                cartItemsContainer.appendChild(cartEmpty);
+                cartTotalSection.style.display = 'none';
+                cartActions.style.display = 'none';
+            } else {
+                // Hide empty cart message
+                cartEmpty.style.display = 'none';
+                
+                // Add cart items
+                cart.forEach(item => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item';
+                    cartItem.innerHTML = `
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <p>$${item.price.toFixed(2)} each</p>
+                        </div>
+                        <div class="cart-item-actions">
+                            <div class="cart-item-quantity">
+                                <button onclick="updateQuantity('${item.id}', ${item.quantity - 1})">-</button>
+                                <span>${item.quantity}</span>
+                                <button onclick="updateQuantity('${item.id}', ${item.quantity + 1})">+</button>
+                            </div>
+                            <div class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                            <button class="remove-item" onclick="removeFromCart('${item.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(cartItem);
+                });
+                
+                // Show total and actions
+                const total = calculateTotal();
+                cartTotalPrice.textContent = `$${total.toFixed(2)}`;
+                cartTotalSection.style.display = 'flex';
+                cartActions.style.display = 'flex';
+            }
+        }
+        
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--maroon);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 25px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                z-index: 1001;
+                animation: slideUp 0.3s ease;
+            `;
+            
+            // Add styles for animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideUp {
+                    from { transform: translate(-50%, 100%); opacity: 0; }
+                    to { transform: translate(-50%, 0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.remove();
+                style.remove();
+            }, 3000);
+        }
+        
+        // Send order to Gmail
+        function sendOrderToGmail(orderData) {
+            // Create email content
+            const subject = encodeURIComponent(`New Order from ${orderData.name} - Slice House`);
+            
+            const body = encodeURIComponent(`
+Order Details:
+==============
+
+Customer Information:
+---------------------
+Name: ${orderData.name}
+Email: ${orderData.email}
+Phone: ${orderData.phone}
+Order Type: ${orderData.deliveryType}
+${orderData.address ? `Address: ${orderData.address}` : ''}
+
+Order Summary:
+--------------
+${orderData.orderSummary}
+
+Order Notes: ${orderData.notes || 'None'}
+Voucher Code: ${orderData.voucher || 'None'}
+
+Total Amount: $${orderData.total}
+
+Order Time: ${new Date().toLocaleString()}
+            `);
+            
+            // Create Gmail mailto link
+            const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=your-email@gmail.com&su=${subject}&body=${body}`;
+            
+            // Open in new window
+            window.open(gmailLink, '_blank');
+            
+            return true;
+        }
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load cart from localStorage
+            loadCart();
+            
+            // Cart toggle functionality
+            const cartToggle = document.getElementById('cartToggle');
+            const cartContainer = document.getElementById('cartContainer');
+            
+            cartToggle.addEventListener('click', function() {
+                cartContainer.classList.toggle('show');
+            });
+            
+            // Close cart when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!cartContainer.contains(event.target) && 
+                    !cartToggle.contains(event.target) && 
+                    cartContainer.classList.contains('show')) {
+                    cartContainer.classList.remove('show');
+                }
+            });
+            
+            // Clear cart button
+            document.getElementById('clearCart').addEventListener('click', clearCart);
+            
+            // Checkout button
+            document.getElementById('checkoutBtn').addEventListener('click', function() {
+                if (cart.length === 0) {
+                    showNotification('Your cart is empty!');
+                    return;
+                }
+                
+                // Close cart
+                cartContainer.classList.remove('show');
+                
+                // Open order modal
+                openOrderModal();
+            });
+            
+            // Add event listeners to all "Add to Cart" buttons
+            const addToCartButtons = document.querySelectorAll('.combo-btn-horizontal');
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const comboId = this.getAttribute('data-combo');
+                    const comboName = this.getAttribute('data-name');
+                    const comboPrice = this.getAttribute('data-price');
+                    
+                    addToCart(comboId, comboName, comboPrice);
+                });
+            });
+            
+            // Modal functionality
+            const orderModal = document.getElementById('orderModal');
+            const closeModal = document.querySelector('.close-modal');
+            const orderForm = document.getElementById('orderForm');
+            const deliveryOptions = document.querySelectorAll('input[name="deliveryType"]');
+            const addressField = document.getElementById('addressField');
+            
+            // Open order modal
+            function openOrderModal() {
+                // Generate order summary
+                const orderSummary = document.getElementById('orderSummary');
+                let summaryHTML = '<h3>Order Summary</h3>';
+                
+                cart.forEach(item => {
+                    summaryHTML += `
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>${item.name} x${item.quantity}</span>
+                            <span>$${(item.price * item.quantity).toFixed(2)}</span>
+                        </div>
+                    `;
+                });
+                
+                summaryHTML += `
+                    <div style="display: flex; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 2px solid var(--border-color); font-weight: bold;">
+                        <span>Total:</span>
+                        <span>$${calculateTotal().toFixed(2)}</span>
+                    </div>
+                `;
+                
+                orderSummary.innerHTML = summaryHTML;
+                
+                // Reset form
+                orderForm.reset();
+                addressField.style.display = 'block';
+                
+                // Show modal
+                orderModal.style.display = 'flex';
+            }
+            
+            // Handle delivery type changes
+            deliveryOptions.forEach(option => {
+                option.addEventListener('change', function() {
+                    if (this.value === 'delivery') {
+                        addressField.style.display = 'block';
+                        document.getElementById('address').required = true;
+                    } else {
+                        addressField.style.display = 'none';
+                        document.getElementById('address').required = false;
+                    }
+                });
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', function() {
+                orderModal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', function(event) {
+                if (event.target === orderModal) {
+                    orderModal.style.display = 'none';
+                }
+            });
+            
+            // Form submission
+            orderForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const deliveryType = document.querySelector('input[name="deliveryType"]:checked').value;
+                const address = deliveryType === 'delivery' ? document.getElementById('address').value : '';
+                const notes = document.getElementById('orderNotes').value;
+                const voucher = document.getElementById('voucher').value;
+                const total = calculateTotal();
+                
+                // Create order summary text
+                let orderSummaryText = '';
+                cart.forEach(item => {
+                    orderSummaryText += `${item.name} x${item.quantity}: $${(item.price * item.quantity).toFixed(2)}\n`;
+                });
+                
+                // Prepare order data
+                const orderData = {
+                    name,
+                    email,
+                    phone,
+                    deliveryType,
+                    address,
+                    notes,
+                    voucher,
+                    total: total.toFixed(2),
+                    orderSummary: orderSummaryText,
+                    items: [...cart]
+                };
+                
+                // Send order to Gmail
+                const sent = sendOrderToGmail(orderData);
+                
+                if (sent) {
+                    // Show success message
+                    alert(`Thank you for your order, ${name}!\n\nYour order has been received and an email has been sent.\nOrder Total: $${total.toFixed(2)}\n\nPlease check your email for order confirmation.`);
+                    
+                    // Clear cart
+                    clearCart();
+                    
+                    // Close modal
+                    orderModal.style.display = 'none';
+                } else {
+                    alert('There was an error processing your order. Please try again.');
+                }
+            });
+            
+            // Header order button
+            const orderOnlineBtn = document.getElementById('orderOnlineBtn');
+            if (orderOnlineBtn) {
+                orderOnlineBtn.addEventListener('click', function() {
+                    if (cart.length === 0) {
+                        showNotification('Add items to cart first!');
+                        return;
+                    }
+                    openOrderModal();
+                });
+            }
+            
+            // Footer order button
+            const footerOrderBtn = document.getElementById('footerOrderBtn');
+            if (footerOrderBtn) {
+                footerOrderBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (cart.length === 0) {
+                        showNotification('Add items to cart first!');
+                        return;
+                    }
+                    openOrderModal();
+                });
+            }
+            
+            // Add keyboard support
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    if (orderModal.style.display === 'flex') {
+                        orderModal.style.display = 'none';
+                    }
+                    if (cartContainer.classList.contains('show')) {
+                        cartContainer.classList.remove('show');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
