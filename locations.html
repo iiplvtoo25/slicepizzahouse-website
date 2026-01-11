@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slice House - Locations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-img">
+                    <i class="fas fa-pizza-slice"></i>
+                </div>
+                <div class="logo-text">SLICE<span>HOUSE</span></div>
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="promotions.html">Promotions</a></li>
+                    <li><a href="locations.html" class="active">Locate Us</a></li>
+                    <li><button class="order-online-btn" id="orderOnlineBtn">Order Online</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Simple Picture Banner -->
+    <div class="locations-banner"></div>
+    
+    <!-- Main Locations Content -->
+    <main class="container">
+        <!-- Locations List -->
+        <section class="locations-section" id="locations-section">
+            <h2 class="section-title">Our Locations</h2>
+            
+            <div class="location-cards">
+                <div class="location-card">
+                    <div class="location-header">
+                        <h3>Downtown Location</h3>
+                        <span class="location-status open">Open Now</span>
+                    </div>
+                    <div class="location-info">
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Address</h4>
+                                <a href="https://www.google.com/maps/search/?api=1&query=123+Jalan+Bukit+Bintang+Kuala+Lumpur+Malaysia" 
+                                   target="_blank" 
+                                   class="address-link">
+                                    <p>123 Jalan Bukit Bintang</p>
+                                    <p>55100 Kuala Lumpur, Malaysia</p>
+                                    <span class="map-link-text"><i class="fas fa-external-link-alt"></i> View on Google Maps</span>
+                            </a>
+                         </div>
+                     </div>  
+                       <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h4>Opening Hours</h4>
+                                <p>Monday - Thursday: 11:00 AM - 11:00 PM</p>
+                                <p>Friday - Sunday: 11:00 AM - 12:00 AM</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Contact</h4>
+                                <p>+60 3-2148 1234</p>
+                                <p>downtown@slicehouse.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="location-features">
+                        <span class="feature-tag"><i class="fas fa-utensils"></i> Dine-in</span>
+                        <span class="feature-tag"><i class="fas fa-box"></i> Takeaway</span>
+                        <span class="feature-tag"><i class="fas fa-truck"></i> Delivery</span>
+                        <span class="feature-tag"><i class="fas fa-wifi"></i> Free WiFi</span>
+                    </div>
+                </div>
+                
+                <div class="location-card highlight">
+                    <div class="location-header">
+                        <h3>University Campus</h3>
+                        <span class="location-status open">Open Now</span>
+                    </div>
+                    <div class="location-info">
+                        <div class="info-item">
+ <i class="fas fa-map-marker-alt"></i>
+    <div>
+        <h4>Address</h4>
+        <a href="https://www.google.com/maps/search/?api=1&query=University+of+Malaya+Kuala+Lumpur+Malaysia" 
+           target="_blank" 
+           class="address-link">
+            <p>University of Malaya</p>
+            <p>50603 Kuala Lumpur, Malaysia</p>
+            <span class="map-link-text"><i class="fas fa-external-link-alt"></i> View on Google Maps</span>
+        </a>
+    </div>
+</div>
+                           <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h4>Opening Hours</h4>
+                                <p>Monday - Sunday: 10:00 AM - 11:00 PM</p>
+                                <p>Extended hours during exams</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Contact</h4>
+                                <p>+60 3-7621 5678</p>
+                                <p>park@slicehouse.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="location-features">
+                        <span class="feature-tag"><i class="fas fa-utensils"></i> Dine-in</span>
+                        <span class="feature-tag"><i class="fas fa-box"></i> Takeaway</span>
+                        <span class="feature-tag"><i class="fas fa-truck"></i> Delivery</span>
+                        <span class="feature-tag"><i class="fas fa-graduation-cap"></i> Student Discount</span>
+                        <span class="feature-tag"><i class="fas fa-wifi"></i> Free WiFi</span>
+                        <span class="feature-tag"><i class="fas fa-plug"></i> Study Outlets</span>
+                    </div>
+                </div>
+                
+                <div class="location-card">
+                    <div class="location-header">
+                        <h3>Westside Mall</h3>
+                        <span class="location-status open">Open Now</span>
+                    </div>
+                    <div class="location-info">
+                        <div class="info-item">
+    <i class="fas fa-map-marker-alt"></i>
+    <div>
+        <h4>Address</h4>
+        <a href="https://www.google.com/maps/search/?api=1&query=Aman+Central+Mall+Alor+Setar+Kedah+Malaysia" 
+           target="_blank" 
+           class="address-link">
+            <p>Unit No 1-53, 1-53A, 1-63A and 1-65, First Floor, No.1, Aman Central, Darul Aman Hwy</p>
+            <p>Kampung Lubok Peringgi, 05100 Alor Setar, Kedah</p>
+            <span class="map-link-text"><i class="fas fa-external-link-alt"></i> View on Google Maps</span>
+        </a>
+    </div>
+</div>                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h4>Opening Hours</h4>
+                                <p>Monday - Sunday: 10:00 AM - 10:00 PM</p>
+                                <p>Mall operating hours apply</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Contact</h4>
+                                <p>+60 3-7983 9012</p>
+                                <p>mall@slicehouse.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="location-features">
+                        <span class="feature-tag"><i class="fas fa-utensils"></i> Dine-in</span>
+                        <span class="feature-tag"><i class="fas fa-box"></i> Takeaway</span>
+                        <span class="feature-tag"><i class="fas fa-parking"></i> Mall Parking</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Map Section -->
+        <section class="map-section">
+            <h2 class="section-title">Interactive Map</h2>
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <div class="map-controls">
+                        <button class="map-btn active" data-location="downtown">Downtown</button>
+                        <button class="map-btn" data-location="campus">University</button>
+                        <button class="map-btn" data-location="mall">Westside Mall</button>
+                    </div>
+                    <div class="map-display">
+                        <div class="map-display-content">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <h3>Interactive Map</h3>
+                            <p>Select a location above to view it on the map</p>
+                            <div class="map-info" id="mapInfo">
+                                <h4>Downtown Location</h4>
+                                <p>123 Jalan Bukit Bintang, 55100 Kuala Lumpur, Malaysia</p>
+                                <p>Estimated travel time from your location: 15 minutes</p>
+                                <p><strong>Parking:</strong> Street parking available, paid parking garage nearby</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Delivery Information -->
+        <section class="delivery-section">
+            <div class="delivery-info">
+                <h3><i class="fas fa-truck"></i> Delivery Information</h3>
+                <div class="delivery-grid">
+                    <div class="delivery-item">
+                        <h4>Delivery Areas</h4>
+                        <p>We deliver within 5km radius of each location</p>
+                        <p>Free delivery for orders above RM 120</p>
+                    </div>
+                    <div class="delivery-item">
+                        <h4>Delivery Hours</h4>
+                        <p>11:00 AM - 10:30 PM Daily</p>
+                        <p>Last order for delivery: 10:00 PM</p>
+                    </div>
+                    <div class="delivery-item">
+                        <h4>Delivery Time</h4>
+                        <p>30 minutes or less guaranteed</p>
+                        <p>Free pizza if delivery takes more than 45 minutes*</p>
+                    </div>
+                </div>
+                <p style="color: var(--text-light); font-size: 14px; margin-top: 20px;">*Terms and conditions apply. Not valid during extreme weather or special events.</p>
+            </div>
+        </section>
+        
+        <!-- Contact Form -->
+        <section class="contact-section">
+            <div class="contact-card">
+                <h3>Contact Us</h3>
+                <p>Have questions or feedback? Get in touch with us!</p>
+                <form id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contactName">Your Name</label>
+                            <input type="text" id="contactName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Email Address</label>
+                            <input type="email" id="contactEmail" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactLocation">Select Location</label>
+                        <select id="contactLocation" required>
+                            <option value="">-- Choose a location --</option>
+                            <option value="downtown">Downtown</option>
+                            <option value="campus">University Campus</option>
+                            <option value="mall">Westside Mall</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactMessage">Message</label>
+                        <textarea id="contactMessage" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-order-btn">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                <div class="logo-img" style="width: 40px; height: 40px;">
+                    <i class="fas fa-pizza-slice"></i>
+                </div>
+                <div class="logo-text" style="font-size: 22px;">SLICE<span>HOUSE</span></div>
+            </div>
+            
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="menu.html">Menu</a>
+                <a href="promotions.html">Promotions</a>
+                <a href="locations.html">Locations</a>
+                <a href="#" id="footerOrderBtn">Order Online</a>
+            </div>
+            
+            <p class="copyright">© 2023 Slice House. All Rights Reserved.</p>
+            
+        </div>
+    </footer>
+    
+    <!-- Order Online Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Place Your Order</h2>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="orderLocation">Select Location for Pickup/Delivery</label>
+                    <select id="orderLocation" required>
+                        <option value="">-- Choose location --</option>
+                        <option value="downtown">Downtown</option>
+                        <option value="campus">University Campus</option>
+                        <option value="mall">Westside Mall</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="orderType">Order Type</label>
+                    <select id="orderType" required>
+                        <option value="delivery">Delivery</option>
+                        <option value="pickup">Pickup</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="orderItem">Select Item</label>
+                    <select id="orderItem" required>
+                        <option value="">-- Choose an item --</option>
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="form-group" id="sizeGroup">
+                    <label for="orderSize">Size (for pizza only)</label>
+                    <select id="orderSize">
+                        <option value="personal">Personal</option>
+                        <option value="regular" selected>Regular</option>
+                        <option value="large">Large</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" min="1" value="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="Enter your phone number" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">Delivery Address</label>
+                    <textarea id="address" rows="3" placeholder="Enter your delivery address"></textarea>
+                </div>
+                
+                <button type="submit" class="submit-order-btn">Place Order Now</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+    // Location page specific JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+        // Map controls
+        const mapBtns = document.querySelectorAll('.map-btn');
+        const mapInfo = document.getElementById('mapInfo');
+        
+        mapBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                mapBtns.forEach(b => b.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Update map info based on location
+                const location = this.getAttribute('data-location');
+                let locationInfo = '';
+                
+                if (location === 'downtown') {
+                    locationInfo = `
+                        <h4>Downtown Location</h4>
+                        <p>123 Jalan Bukit Bintang, 55100 Kuala Lumpur, Malaysia</p>
+                        <p><a href="https://www.google.com/maps/search/?api=1&query=123+Jalan+Bukit+Bintang+Kuala+Lumpur+Malaysia" 
+                              target="_blank" 
+                              style="color: var(--maroon); text-decoration: none; font-weight: 600; display: inline-block; margin: 10px 0; padding: 5px 15px; background-color: rgba(128, 0, 0, 0.1); border-radius: 20px; transition: all 0.3s ease;">
+                            <i class="fas fa-map-marked-alt"></i> Open in Google Maps
+                        </a></p>
+                        <p>Estimated travel time from your location: 15 minutes</p>
+                        <p><strong>Parking:</strong> Street parking available, paid parking garage nearby</p>
+                    `;
+                } else if (location === 'campus') {
+                    locationInfo = `
+                        <h4>University Campus Location</h4>
+                        <p>University of Malaya, 50603 Kuala Lumpur, Malaysia</p>
+                        <p><a href="https://www.google.com/maps/search/?api=1&query=University+of+Malaya+Kuala+Lumpur+Malaysia" 
+                              target="_blank" 
+                              style="color: var(--maroon); text-decoration: none; font-weight: 600; display: inline-block; margin: 10px 0; padding: 5px 15px; background-color: rgba(128, 0, 0, 0.1); border-radius: 20px; transition: all 0.3s ease;">
+                            <i class="fas fa-map-marked-alt"></i> Open in Google Maps
+                        </a></p>
+                        <p>Estimated travel time from your location: 10 minutes</p>
+                        <p><strong>Parking:</strong> University parking lots, student parking available</p>
+                    `;
+                } else if (location === 'mall') {
+                    locationInfo = `
+                        <h4>Westside Mall Location</h4>
+                        <p>Unit No 1-53, 1-53A, 1-63A and 1-65, First Floor, No.1, Aman Central, Darul Aman Hwy</p>
+                        <p>Kampung Lubok Peringgi, 05100 Alor Setar, Kedah</p>
+                        <p><a href="https://www.google.com/maps/search/?api=1&query=Aman+Central+Mall+Alor+Setar+Kedah+Malaysia" 
+                              target="_blank" 
+                              style="color: var(--maroon); text-decoration: none; font-weight: 600; display: inline-block; margin: 10px 0; padding: 5px 15px; background-color: rgba(128, 0, 0, 0.1); border-radius: 20px; transition: all 0.3s ease;">
+                            <i class="fas fa-map-marked-alt"></i> Open in Google Maps
+                        </a></p>
+                        <p>Estimated travel time from your location: 25 minutes</p>
+                        <p><strong>Parking:</strong> Mall parking available</p>
+                    `;
+                }
+                
+                mapInfo.innerHTML = locationInfo;
+                
+                // Add hover effect to Google Maps links in the map info
+                const mapLinks = mapInfo.querySelectorAll('a');
+                mapLinks.forEach(link => {
+                    link.addEventListener('mouseenter', function() {
+                        this.style.backgroundColor = 'var(--maroon)';
+                        this.style.color = 'white';
+                        this.style.transform = 'translateY(-2px)';
+                        this.style.boxShadow = '0 4px 8px rgba(128, 0, 0, 0.2)';
+                    });
+                    
+                    link.addEventListener('mouseleave', function() {
+                        this.style.backgroundColor = 'rgba(128, 0, 0, 0.1)';
+                        this.style.color = 'var(--maroon)';
+                        this.style.transform = 'translateY(0)';
+                        this.style.boxShadow = 'none';
+                    });
+                });
+            });
+        });
+        
+        // Contact form
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('contactName').value;
+                const location = document.getElementById('contactLocation').value;
+                
+                alert(`Thank you for your message, ${name}! We'll get back to you regarding the ${location} location within 24 hours.`);
+                contactForm.reset();
+            });
+        }
+        
+        // Add click functionality to all address links
+        const addressLinks = document.querySelectorAll('.address-link');
+        addressLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Optional: Add analytics tracking
+                console.log('Google Maps link clicked:', this.href);
+            });
+        });
+        
+        // Make map info links clickable and have same hover effect
+        const updateMapLinks = () => {
+            const mapInfoLinks = mapInfo.querySelectorAll('a');
+            mapInfoLinks.forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    this.style.backgroundColor = 'var(--maroon)';
+                    this.style.color = 'white';
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 4px 8px rgba(128, 0, 0, 0.2)';
+                });
+                
+                link.addEventListener('mouseleave', function() {
+                    this.style.backgroundColor = 'rgba(128, 0, 0, 0.1)';
+                    this.style.color = 'var(--maroon)';
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+        };
+        
+        // Initial update
+        updateMapLinks();
+    });
+        // Location page specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Map controls
+            const mapBtns = document.querySelectorAll('.map-btn');
+            const mapInfo = document.getElementById('mapInfo');
+            
+            mapBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    mapBtns.forEach(b => b.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Update map info based on location
+                    const location = this.getAttribute('data-location');
+                    let locationInfo = '';
+                    
+                    if (location === 'downtown') {
+                        locationInfo = `
+                            <h4>Downtown Location</h4>
+                            <p>123 Jalan Bukit Bintang, 55100 Kuala Lumpur, Malaysia</p>
+                            <p>Estimated travel time from your location: 15 minutes</p>
+                            <p><strong>Parking:</strong> Street parking available, paid parking garage nearby</p>
+                        `;
+                    } else if (location === 'campus') {
+                        locationInfo = `
+                            <h4>University Campus Location</h4>
+                            <p>University of Malaya, 50603 Kuala Lumpur, Malaysia</p>
+                            <p>Estimated travel time from your location: 10 minutes</p>
+                            <p><strong>Parking:</strong> University parking lots, student parking available</p>
+                        `;
+                    } else if (location === 'mall') {
+                        locationInfo = `
+                            <h4>Westside Mall Location</h4>
+                            <p>Unit No 1-53, 1-53A, 1-63A and 1-65, First Floor, No.1, Aman Central, Darul Aman Hwy</p>
+                            <p>Kampung Lubok Peringgi, 05100 Alor Setar, Kedah</p>
+                            <p>Estimated travel time from your location: 25 minutes</p>
+                        `;
+                    }
+                    
+                    mapInfo.innerHTML = locationInfo;
+                });
+            });
+            
+            // Contact form
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const name = document.getElementById('contactName').value;
+                    const location = document.getElementById('contactLocation').value;
+                    
+                    alert(`Thank you for your message, ${name}! We'll get back to you regarding the ${location} location within 24 hours.`);
+                    contactForm.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
