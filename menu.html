@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slice House - Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+    /* Extra Large, Clear Banner */
+    .page-hero {
+        height: 600px; /* MUCH BIGGER - increased to 600px */
+        background: url('menu-pizza.png') no-repeat center center;
+        background-size: cover;
+        background-attachment: fixed; /* Optional: creates parallax effect */
+        margin-bottom: 40px;
+        position: relative;
+    }
+
+    /* Cart Button Styles */
+    .cart-btn-container {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        z-index: 999;
+    }
+
+    .cart-btn {
+        background-color: var(--maroon);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(128, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .cart-btn:hover {
+        transform: scale(1.1);
+        background-color: var(--light-maroon);
+    }
+
+    .cart-count {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: #ff5722;
+        color: white;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    /* Cart Modal Styles */
+    .cart-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1002;
+        justify-content: flex-end;
+    }
+
+    .cart-content {
+        background-color: white;
+        width: 400px;
+        height: 100%;
+        padding: 25px;
+        overflow-y: auto;
+        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3);
+        animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    .cart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid var(--border-color);
+    }
+
+    .cart-header h2 {
+        color: var(--maroon);
+        font-size: 28px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .close-cart {
+        font-size: 28px;
+        color: var(--text-light);
+        cursor: pointer;
+        background: none;
+        border: none;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .close-cart:hover {
+        background-color: var(--medium-bg);
+        color: var(--maroon);
+    }
+
+    .cart-items {
+        min-height: 300px;
+        margin-bottom: 25px;
+    }
+
+    .cart-empty {
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--text-light);
+    }
+
+    .cart-empty i {
+        font-size: 60px;
+        margin-bottom: 20px;
+        color: var(--border-color);
+    }
+
+    .cart-empty h3 {
+        margin-bottom: 10px;
+        color: var(--text-dark);
+    }
+
+    .cart-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background-color: var(--light-bg);
+        border-radius: 10px;
+        margin-bottom: 15px;
+        border: 1px solid var(--border-color);
+    }
+
+    .cart-item-image {
+        width: 70px;
+        height: 70px;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+
+    .cart-item-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .cart-item-details {
+        flex: 1;
+    }
+
+    .cart-item-name {
+        font-weight: bold;
+        color: var(--black);
+        margin-bottom: 5px;
+        font-size: 16px;
+    }
+
+    .cart-item-size, .cart-item-price {
+        font-size: 14px;
+        color: var(--text-light);
+        margin-bottom: 5px;
+    }
+
+    .cart-item-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 8px;
+    }
+
+    .quantity-btn {
+        background-color: var(--maroon);
+        color: white;
+        border: none;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+
+    .quantity-btn:hover {
+        background-color: var(--light-maroon);
+    }
+
+    .quantity-input {
+        width: 40px;
+        text-align: center;
+        padding: 5px;
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+    }
+
+    .remove-item {
+        background: none;
+        border: none;
+        color: #c62828;
+        cursor: pointer;
+        font-size: 14px;
+        padding: 5px;
+        transition: all 0.2s ease;
+    }
+
+    .remove-item:hover {
+        text-decoration: underline;
+    }
+
+    .cart-summary {
+        background-color: var(--light-bg);
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        margin-top: 20px;
+    }
+
+    .cart-total {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        font-size: 20px;
+        font-weight: bold;
+        color: var(--black);
+    }
+
+    .cart-total-price {
+        color: var(--maroon);
+        font-size: 24px;
+    }
+
+    .checkout-btn {
+        background-color: var(--maroon);
+        color: white;
+        border: none;
+        padding: 15px;
+        border-radius: 10px;
+        font-weight: bold;
+        font-size: 16px;
+        width: 100%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .checkout-btn:hover {
+        background-color: var(--light-maroon);
+        transform: translateY(-2px);
+    }
+
+    .checkout-btn:disabled {
+        background-color: var(--border-color);
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    /* Menu Item Quantity Selector */
+    .menu-item-quantity {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .quantity-selector {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .quantity-selector button {
+        background-color: var(--maroon);
+        color: white;
+        border: none;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .quantity-selector input {
+        width: 50px;
+        text-align: center;
+        padding: 8px;
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+    }
+
+    /* Delivery Options */
+    .delivery-options {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .delivery-option {
+        flex: 1;
+        text-align: center;
+        padding: 15px;
+        border: 2px solid var(--border-color);
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: white;
+    }
+
+    .delivery-option:hover {
+        border-color: var(--maroon);
+        background-color: rgba(128, 0, 0, 0.05);
+    }
+
+    .delivery-option.selected {
+        border-color: var(--maroon);
+        background-color: rgba(128, 0, 0, 0.1);
+    }
+
+    .delivery-option i {
+        font-size: 24px;
+        color: var(--maroon);
+        margin-bottom: 10px;
+    }
+
+    .delivery-option h4 {
+        margin-bottom: 5px;
+        color: var(--black);
+    }
+
+    .delivery-option p {
+        font-size: 13px;
+        color: var(--text-light);
+        margin-bottom: 0;
+    }
+
+    /* Delivery fee display */
+    .delivery-fee {
+        background-color: rgba(128, 0, 0, 0.1);
+        padding: 10px 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border-left: 4px solid var(--maroon);
+        display: none;
+    }
+
+    .delivery-fee.show {
+        display: block;
+    }
+
+    .delivery-fee p {
+        margin: 0;
+        font-size: 14px;
+        color: var(--text-dark);
+    }
+
+    .delivery-fee strong {
+        color: var(--maroon);
+    }
+
+    /* Gmail Instruction */
+    .gmail-instruction {
+        background-color: #e8f4f8;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 20px 0;
+        border-left: 4px solid #1a73e8;
+    }
+
+    .gmail-instruction p {
+        margin: 0;
+        font-size: 14px;
+        color: #202124;
+    }
+
+    .gmail-instruction i {
+        color: #1a73e8;
+        margin-right: 8px;
+    }
+
+    /* Responsive adjustments for larger banner */
+    @media (max-width: 768px) {
+        .cart-content {
+            width: 100%;
+        }
+        
+        .cart-btn-container {
+            top: 80px;
+            right: 15px;
+        }
+        
+        .cart-btn {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+        }
+        
+        /* Still decent size on mobile */
+        .page-hero {
+            height: 400px;
+            background-attachment: scroll; /* Remove fixed on mobile */
+        }
+        
+        .delivery-options {
+            flex-direction: column;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .page-hero {
+            height: 350px;
+        }
+    }
+    
+    /* Even bigger on large screens */
+    @media (min-width: 1200px) {
+        .page-hero {
+            height: 700px; /* Massive on large screens */
+        }
+    }
+</style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-img">
+                    <i class="fas fa-pizza-slice"></i>
+                </div>
+                <div class="logo-text">SLICE<span>HOUSE</span></div>
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html" class="active">Menu</a></li>
+                    <li><a href="promotions.html">Promotions</a></li>
+                    <li><a href="locations.html">Locate Us</a></li>
+                    <li><button class="order-online-btn" id="orderOnlineBtn">Order Online</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Floating Cart Button -->
+    <div class="cart-btn-container">
+        <button class="cart-btn" id="cartButton">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cartCount">0</span>
+        </button>
+    </div>
+    
+    <!-- Picture Banner for Menu Page - Clear and Crisp -->
+    <section class="page-hero">
+        <!-- Clean, clear background image only -->
+    </section>
+    
+    <!-- Main Menu Content -->
+    <main class="container">
+        <!-- Pizza Menu -->
+        <section class="menu-section">
+            <h2 class="section-title">Pizza Selection</h2>
+            <div class="menu-category">
+                <h3 class="category-title">Signature Pizzas</h3>
+                <p class="category-description">All our pizzas are available in Personal, Regular, and Large sizes. Made fresh with our signature crust.</p>
+                <div class="menu-items" id="pizza-container">
+                    <!-- Pizza items will be generated by JavaScript -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Drinks Menu -->
+        <section class="menu-section">
+            <h2 class="section-title">Drinks & Beverages</h2>
+            <div class="menu-category">
+                <h3 class="category-title">Refreshing Drinks</h3>
+                <p class="category-description">All drinks are served in Medium size (500ml). Can be upgraded to Large for $1.50 extra.</p>
+                <div class="menu-items" id="drinks-container">
+                    <!-- Drink items will be generated by JavaScript -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Special Offers -->
+        <section class="menu-section">
+            <div class="promo-card" style="margin-top: 30px;">
+                <div class="promo-header">
+                    <div class="promo-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <h3 class="promo-title">Combo Deals</h3>
+                </div>
+                <ul class="promo-list">
+                    <li><strong>Family Combo:</strong> 2 Large Pizzas + 2 Drinks = $49.90 (Save $12)</li>
+                    <li><strong>Student Combo:</strong> 1 Regular Pizza + 1 Drink = $24.90 (Save $5)</li>
+                    <li><strong>Party Pack:</strong> 3 Large Pizzas + 4 Drinks = $69.90 (Save $18)</li>
+                </ul>
+                <a href="promotions.html" class="hero-btn" style="margin-top: 20px; display: inline-block;">View All Promotions</a>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Shopping Cart Modal -->
+    <div id="cartModal" class="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2><i class="fas fa-shopping-cart"></i> Your Cart</h2>
+                <button class="close-cart" id="closeCart">&times;</button>
+            </div>
+            
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be added here dynamically -->
+                <div class="cart-empty">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Your cart is empty</h3>
+                    <p>Add some delicious items from our menu!</p>
+                </div>
+            </div>
+            
+            <div class="cart-summary">
+                <div class="cart-total">
+                    <span>Subtotal:</span>
+                    <span class="cart-total-price" id="cartTotal">$0.00</span>
+                </div>
+                <div id="deliveryFeeDisplay" style="display: none; margin-bottom: 15px; padding: 8px 15px; background-color: #f5f5f5; border-radius: 5px; font-size: 14px;">
+                    <span>Delivery Fee:</span>
+                    <span style="float: right; color: var(--maroon);">$5.00</span>
+                </div>
+                <div class="cart-total" style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 10px; font-size: 22px;">
+                    <span>Total:</span>
+                    <span class="cart-total-price" id="cartTotalWithFee">$0.00</span>
+                </div>
+                <button class="checkout-btn" id="checkoutBtn" disabled>
+                    <i class="fas fa-credit-card"></i> Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Order Online Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Checkout</h2>
+            
+            <!-- Gmail Instruction -->
+            <div class="gmail-instruction">
+                <p><i class="fas fa-info-circle"></i> After filling this form, your order details will be sent via Gmail. Please check your email to confirm your order.</p>
+            </div>
+            
+            <!-- Gmail Form -->
+            <form id="gmailOrderForm" action="mailto:your-restaurant@gmail.com" method="post" enctype="text/plain" target="_blank">
+                <input type="hidden" name="subject" id="emailSubject" value="Slice House Order">
+                <input type="hidden" name="body" id="emailBody">
+                
+                <div class="form-group">
+                    <label for="customerName">Your Name *</label>
+                    <input type="text" id="customerName" name="customerName" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerEmail">Email Address *</label>
+                    <input type="email" id="customerEmail" name="customerEmail" placeholder="Enter your email address" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerPhone">Phone Number *</label>
+                    <input type="tel" id="customerPhone" name="customerPhone" placeholder="Enter your phone number" required>
+                </div>
+                
+                <!-- Delivery Options -->
+                <div class="form-group">
+                    <label>Order Type *</label>
+                    <div class="delivery-options">
+                        <div class="delivery-option selected" data-type="dinein">
+                            <i class="fas fa-utensils"></i>
+                            <h4>Dine-in</h4>
+                            <p>Pick up at our restaurant</p>
+                        </div>
+                        <div class="delivery-option" data-type="delivery">
+                            <i class="fas fa-motorcycle"></i>
+                            <h4>Delivery</h4>
+                            <p>Delivered to your address</p>
+                        </div>
+                    </div>
+                    <input type="hidden" id="orderType" name="orderType" value="dinein" required>
+                </div>
+                
+                <!-- Delivery Address (shown only for delivery) -->
+                <div class="form-group" id="addressGroup">
+                    <label for="deliveryAddress">Delivery Address *</label>
+                    <textarea id="deliveryAddress" name="deliveryAddress" rows="3" placeholder="Enter your delivery address"></textarea>
+                    <small style="color: var(--text-light);">Required for delivery orders</small>
+                </div>
+                
+                <!-- Dine-in Location (shown only for dine-in) -->
+                <div class="form-group" id="locationGroup">
+                    <label for="restaurantLocation">Select Location *</label>
+                    <select id="restaurantLocation" name="restaurantLocation">
+                        <option value="">Select a restaurant location</option>
+                        <option value="Downtown Branch - 123 Main St">Downtown Branch - 123 Main St</option>
+                        <option value="Uptown Branch - 456 Park Ave">Uptown Branch - 456 Park Ave</option>
+                        <option value="Westside Branch - 789 Oak Rd">Westside Branch - 789 Oak Rd</option>
+                    </select>
+                    <small style="color: var(--text-light);">Required for dine-in orders</small>
+                </div>
+                
+                <!-- Delivery Fee Notice -->
+                <div class="delivery-fee" id="deliveryFeeNotice">
+                    <p><i class="fas fa-info-circle"></i> <strong>Delivery Fee:</strong> A $5.00 delivery fee will be added to your order total.</p>
+                </div>
+                
+                <!-- Pickup/Delivery Time -->
+                <div class="form-group">
+                    <label for="preferredTime">Preferred Time *</label>
+                    <select id="preferredTime" name="preferredTime" required>
+                        <option value="">Select preferred time</option>
+                        <option value="ASAP (30-45 minutes)">ASAP (30-45 minutes)</option>
+                        <option value="Within 1 hour">Within 1 hour</option>
+                        <option value="Within 2 hours">Within 2 hours</option>
+                        <option value="Specific time (mention below)">Specific time (mention below)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="specialInstructions">Special Instructions (Optional)</label>
+                    <textarea id="specialInstructions" name="specialInstructions" rows="2" placeholder="Any special requests or instructions"></textarea>
+                </div>
+                
+                <!-- Order Summary (Display only) -->
+                <div class="form-group" id="orderSummaryDisplay">
+                    <label>Order Summary</label>
+                    <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <div id="orderSummaryContent">
+                            <!-- Order summary will be displayed here -->
+                            <p style="color: var(--text-light); text-align: center;">Your order summary will appear here</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="agreeTerms" required>
+                        I agree to receive order confirmation and updates via email
+                    </label>
+                </div>
+                
+                <button type="submit" class="submit-order-btn" id="submitOrderBtn">
+                    <i class="fas fa-envelope"></i> Send Order via Gmail
+                </button>
+                
+                <div style="margin-top: 15px; text-align: center; color: var(--text-light); font-size: 14px;">
+                    <p><i class="fas fa-exclamation-circle"></i> After clicking "Send Order via Gmail", your email client will open with the order details. Please send the email to complete your order.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                <div class="logo-img" style="width: 40px; height: 40px;">
+                    <i class="fas fa-pizza-slice"></i>
+                </div>
+                <div class="logo-text" style="font-size: 22px;">SLICE<span>HOUSE</span></div>
+            </div>
+            
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="menu.html">Menu</a>
+                <a href="promotions.html">Promotions</a>
+                <a href="locations.html">Locations</a>
+                <a href="#" id="footerOrderBtn">Order Online</a>
+            </div>
+            
+            <p class="copyright">© 2023 Slice House. All Rights Reserved.</p>
+            
+        </div>
+    </footer>
+
+    <script>
+    // Shopping Cart System
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let orderType = 'dinein'; // Default order type
+    const DELIVERY_FEE = 5.00;
+    
+    // === YOUR PIZZA DATA ===
+    const pizzaMenu = [
+        { 
+            id: 1,
+            name: "Chicken Pepperoni Pizza", 
+            description: "Tender chicken with classic pepperoni on our signature tomato sauce",
+            prices: { personal: 18.90, regular: 21.50, large: 25.80 },
+            image: "pizza-pp.jpg"
+        },
+        { 
+            id: 2,
+            name: "Cheese Pizza", 
+            description: "Mozzarella cheese overload with a creamy molten cheese center",
+            prices: { personal: 19.90, regular: 23.40, large: 28.90 },
+            image: "cheese-pizza.jpg"
+        },
+        { 
+            id: 3,
+            name: "Beef Pepperoni Pizza", 
+            description: "Premium beef pepperoni with a blend of Italian herbs",
+            prices: { personal: 19.70, regular: 22.50, large: 27.90 },
+            image: "beef.jpg"
+        },
+        { 
+            id: 4,
+            name: "Veggie Garden Pizza", 
+            description: "Fresh bell peppers, mushrooms, onions, olives, and tomatoes",
+            prices: { personal: 16.60, regular: 18.90, large: 20.30 },
+            image: "veggie.jpg"
+        },
+        { 
+            id: 5,
+            name: "Smoky Beef Mushroom", 
+            description: "Smoked beef strips with fresh mushrooms and special smoky sauce",
+            prices: { personal: 22.50, regular: 25.90, large: 28.90 },
+            image: "smokey.jpg"
+        }
+    ];
+
+    // === YOUR DRINKS DATA ===
+    const drinksMenu = [
+        { 
+            id: 101,
+            name: "Lemonade", 
+            description: "Freshly squeezed lemonade with mint",
+            price: 5.20,
+            image: "lemon.jpg"
+        },
+        { 
+            id: 102,
+            name: "Strawberry Soda", 
+            description: "Sparkling soda with natural strawberry flavor",
+            price: 6.50,
+            image: "Strawberry-Soda.jpg"
+        },
+        { 
+            id: 103,
+            name: "Peach Tea", 
+            description: "Iced tea infused with peach essence",
+            price: 6.00,
+            image: "peach-ice-tea.jpg"
+        },
+        { 
+            id: 104,
+            name: "Chocolate", 
+            description: "Rich Belgian chocolate milkshake",
+            price: 7.00,
+            image: "Iced-chocolate.jpg"
+        },
+        { 
+            id: 105,
+            name: "Sparkling Water", 
+            description: "Premium sparkling mineral water",
+            price: 3.00,
+            image: "sparkling-water.jpg"
+        }
+    ];
+
+    // ========== COMPLETE JAVASCRIPT FUNCTIONS ==========
+    
+    // Generate pizza items with quantity selector
+    const pizzaContainer = document.getElementById('pizza-container');
+    if (pizzaContainer) {
+        pizzaMenu.forEach(pizza => {
+            const pizzaElement = document.createElement('div');
+            pizzaElement.className = 'menu-item';
+            pizzaElement.innerHTML = `
+                <div class="menu-item-image">
+                    <img src="${pizza.image}" alt="${pizza.name}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px 10px 0 0; margin: -20px -20px 15px -20px;">
+                </div>
+                <div class="menu-item-header">
+                    <h3 class="menu-item-name">${pizza.name}</h3>
+                </div>
+                <p style="color: var(--text-light); margin-bottom: 15px; font-size: 14px; min-height: 60px;">${pizza.description}</p>
+                <div class="menu-item-quantity">
+                    <div class="quantity-selector">
+                        <button type="button" onclick="changeQuantity('pizza-${pizza.id}', -1)">-</button>
+                        <input type="number" id="quantity-pizza-${pizza.id}" value="1" min="1" max="10">
+                        <button type="button" onclick="changeQuantity('pizza-${pizza.id}', 1)">+</button>
+                    </div>
+                    <select id="size-pizza-${pizza.id}" style="padding: 8px; border-radius: 5px; border: 1px solid var(--border-color);">
+                        <option value="personal">Personal ($${pizza.prices.personal})</option>
+                        <option value="regular" selected>Regular ($${pizza.prices.regular})</option>
+                        <option value="large">Large ($${pizza.prices.large})</option>
+                    </select>
+                </div>
+                <button class="order-btn" onclick="addToCart(${pizza.id}, 'pizza', '${pizza.name}', '${pizza.image}')">
+                    <i class="fas fa-cart-plus" style="margin-right: 8px;"></i> Add to Cart
+                </button>
+            `;
+            pizzaContainer.appendChild(pizzaElement);
+        });
+    }
+
+    // Generate drink items with quantity selector
+    const drinksContainer = document.getElementById('drinks-container');
+    if (drinksContainer) {
+        drinksMenu.forEach(drink => {
+            const drinkElement = document.createElement('div');
+            drinkElement.className = 'menu-item';
+            drinkElement.innerHTML = `
+                <div class="menu-item-image">
+                    <img src="${drink.image}" alt="${drink.name}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px 10px 0 0; margin: -20px -20px 15px -20px;">
+                </div>
+                <div class="menu-item-header">
+                    <h3 class="menu-item-name">${drink.name}</h3>
+                </div>
+                <p style="color: var(--text-light); margin-bottom: 15px; font-size: 14px; min-height: 60px;">${drink.description}</p>
+                <div class="menu-item-quantity">
+                    <div class="quantity-selector">
+                        <button type="button" onclick="changeQuantity('drink-${drink.id}', -1)">-</button>
+                        <input type="number" id="quantity-drink-${drink.id}" value="1" min="1" max="10">
+                        <button type="button" onclick="changeQuantity('drink-${drink.id}', 1)">+</button>
+                    </div>
+                    <select id="size-drink-${drink.id}" style="padding: 8px; border-radius: 5px; border: 1px solid var(--border-color);">
+                        <option value="medium" selected>Medium ($${drink.price})</option>
+                        <option value="large">Large ($${(drink.price + 1.50).toFixed(2)})</option>
+                    </select>
+                </div>
+                <button class="order-btn" onclick="addToCart(${drink.id}, 'drink', '${drink.name}', '${drink.image}')">
+                    <i class="fas fa-cart-plus" style="margin-right: 8px;"></i> Add to Cart
+                </button>
+            `;
+            drinksContainer.appendChild(drinkElement);
+        });
+    }
+
+    // Quantity change functions
+    window.changeQuantity = function(itemId, change) {
+        const input = document.getElementById(`quantity-${itemId}`);
+        let value = parseInt(input.value) + change;
+        if (value < 1) value = 1;
+        if (value > 10) value = 10;
+        input.value = value;
+    }
+
+    // Add to cart function
+    window.addToCart = function(id, type, name, image) {
+        const quantityInput = document.getElementById(`quantity-${type}-${id}`);
+        const sizeSelect = document.getElementById(`size-${type}-${id}`);
+        
+        const quantity = parseInt(quantityInput.value);
+        const size = sizeSelect.value;
+        
+        // Calculate price based on item type and size
+        let price = 0;
+        if (type === 'pizza') {
+            const pizza = pizzaMenu.find(p => p.id === id);
+            price = pizza.prices[size];
+        } else {
+            const drink = drinksMenu.find(d => d.id === id);
+            price = size === 'large' ? drink.price + 1.50 : drink.price;
+        }
+        
+        // Check if item already exists in cart
+        const existingItemIndex = cart.findIndex(item => 
+            item.id === id && item.type === type && item.size === size
+        );
+        
+        if (existingItemIndex > -1) {
+            // Update quantity of existing item
+            cart[existingItemIndex].quantity += quantity;
+        } else {
+            // Add new item to cart
+            cart.push({
+                id: id,
+                type: type,
+                name: name,
+                image: image,
+                size: size,
+                price: price,
+                quantity: quantity
+            });
+        }
+        
+        // Save to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+        
+        // Update cart UI
+        updateCartUI();
+        
+        // Show success message
+        showNotification(`${quantity} × ${name} added to cart!`);
+        
+        // Reset quantity to 1
+        quantityInput.value = 1;
+    }
+
+    // Update cart UI with delivery fee calculation
+    function updateCartUI() {
+        const cartCount = document.getElementById('cartCount');
+        const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+        const cartTotalWithFee = document.getElementById('cartTotalWithFee');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const deliveryFeeDisplay = document.getElementById('deliveryFeeDisplay');
+        
+        // Update cart count
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCount.textContent = totalItems;
+        
+        // Update cart items display
+        if (cart.length === 0) {
+            cartItems.innerHTML = `
+                <div class="cart-empty">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Your cart is empty</h3>
+                    <p>Add some delicious items from our menu!</p>
+                </div>
+            `;
+            checkoutBtn.disabled = true;
+            deliveryFeeDisplay.style.display = 'none';
+        } else {
+            cartItems.innerHTML = '';
+            cart.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <div class="cart-item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="cart-item-details">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-size">Size: ${item.size.charAt(0).toUpperCase() + item.size.slice(1)}</div>
+                        <div class="cart-item-price">$${item.price.toFixed(2)} each</div>
+                        <div class="cart-item-controls">
+                            <button class="quantity-btn" onclick="updateCartItemQuantity(${index}, -1)">-</button>
+                            <input type="number" class="quantity-input" value="${item.quantity}" min="1" max="10" 
+                                   onchange="updateCartItemQuantityInput(${index}, this.value)">
+                            <button class="quantity-btn" onclick="updateCartItemQuantity(${index}, 1)">+</button>
+                            <button class="remove-item" onclick="removeCartItem(${index})">Remove</button>
+                        </div>
+                    </div>
+                `;
+                cartItems.appendChild(itemElement);
+            });
+            checkoutBtn.disabled = false;
+        }
+        
+        // Calculate subtotal
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        cartTotal.textContent = `$${subtotal.toFixed(2)}`;
+        
+        // Calculate total with delivery fee if applicable
+        let total = subtotal;
+        if (orderType === 'delivery') {
+            total = subtotal + DELIVERY_FEE;
+            deliveryFeeDisplay.style.display = 'block';
+        } else {
+            deliveryFeeDisplay.style.display = 'none';
+        }
+        
+        cartTotalWithFee.textContent = `$${total.toFixed(2)}`;
+    }
+
+    // Update cart item quantity
+    window.updateCartItemQuantity = function(index, change) {
+        cart[index].quantity += change;
+        if (cart[index].quantity < 1) {
+            cart.splice(index, 1);
+        }
+        if (cart[index].quantity > 10) {
+            cart[index].quantity = 10;
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartUI();
+    }
+
+    window.updateCartItemQuantityInput = function(index, value) {
+        const quantity = parseInt(value);
+        if (quantity >= 1 && quantity <= 10) {
+            cart[index].quantity = quantity;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+    }
+
+    // Remove cart item
+    window.removeCartItem = function(index) {
+        cart.splice(index, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartUI();
+        showNotification('Item removed from cart');
+    }
+
+    // Show notification
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background-color: var(--maroon);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1003;
+            animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2.7s;
+            max-width: 300px;
+        `;
+        notification.innerHTML = `
+            <i class="fas fa-check-circle" style="margin-right: 10px;"></i>
+            ${message}
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 3000);
+    }
+
+    // Add CSS animations for notification
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Delivery Options Functionality
+    function setupDeliveryOptions() {
+        const deliveryOptions = document.querySelectorAll('.delivery-option');
+        const orderTypeInput = document.getElementById('orderType');
+        const addressGroup = document.getElementById('addressGroup');
+        const locationGroup = document.getElementById('locationGroup');
+        const deliveryFeeNotice = document.getElementById('deliveryFeeNotice');
+        
+        // Set initial state
+        updateDeliveryFields();
+        
+        deliveryOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options
+                deliveryOptions.forEach(opt => opt.classList.remove('selected'));
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Update order type
+                orderType = this.getAttribute('data-type');
+                orderTypeInput.value = orderType;
+                
+                // Update UI based on selection
+                updateDeliveryFields();
+                
+                // Update cart totals
+                updateCartUI();
+                
+                // Update order summary display
+                updateOrderSummaryDisplay();
+            });
+        });
+        
+        function updateDeliveryFields() {
+            if (orderType === 'delivery') {
+                // Show delivery address, hide location
+                addressGroup.style.display = 'block';
+                locationGroup.style.display = 'none';
+                deliveryFeeNotice.classList.add('show');
+                
+                // Make address required
+                document.getElementById('deliveryAddress').required = true;
+                document.getElementById('restaurantLocation').required = false;
+            } else {
+                // Show location, hide delivery address
+                addressGroup.style.display = 'none';
+                locationGroup.style.display = 'block';
+                deliveryFeeNotice.classList.remove('show');
+                
+                // Make location required
+                document.getElementById('deliveryAddress').required = false;
+                document.getElementById('restaurantLocation').required = true;
+            }
+        }
+    }
+
+    // Update order summary display
+    function updateOrderSummaryDisplay() {
+        const orderSummaryContent = document.getElementById('orderSummaryContent');
+        
+        if (cart.length === 0) {
+            orderSummaryContent.innerHTML = '<p style="color: var(--text-light); text-align: center;">Your order summary will appear here</p>';
+            return;
+        }
+        
+        // Calculate totals
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const deliveryFee = orderType === 'delivery' ? DELIVERY_FEE : 0;
+        const total = subtotal + deliveryFee;
+        
+        let summaryHTML = '<div style="font-size: 14px;">';
+        
+        cart.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            summaryHTML += `
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <div>
+                        ${item.quantity} × ${item.name}<br>
+                        <small style="color: var(--text-light); font-size: 12px;">Size: ${item.size}</small>
+                    </div>
+                    <div>$${itemTotal.toFixed(2)}</div>
+                </div>
+            `;
+        });
+        
+        summaryHTML += `
+            <hr style="border: none; border-top: 1px solid var(--border-color); margin: 10px 0;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span>Subtotal:</span>
+                <span>$${subtotal.toFixed(2)}</span>
+            </div>
+        `;
+        
+        if (orderType === 'delivery') {
+            summaryHTML += `
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <span>Delivery Fee:</span>
+                    <span>$${DELIVERY_FEE.toFixed(2)}</span>
+                </div>
+            `;
+        }
+        
+        summaryHTML += `
+            <hr style="border: none; border-top: 1px solid var(--border-color); margin: 10px 0;">
+            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 16px;">
+                <span>Total:</span>
+                <span style="color: var(--maroon);">$${total.toFixed(2)}</span>
+            </div>
+        </div>`;
+        
+        orderSummaryContent.innerHTML = summaryHTML;
+    }
+
+    // Cart modal functionality
+    const cartButton = document.getElementById('cartButton');
+    const cartModal = document.getElementById('cartModal');
+    const closeCart = document.getElementById('closeCart');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+
+    if (cartButton) {
+        cartButton.addEventListener('click', () => {
+            cartModal.style.display = 'flex';
+        });
+    }
+
+    if (closeCart) {
+        closeCart.addEventListener('click', () => {
+            cartModal.style.display = 'none';
+        });
+    }
+
+    if (cartModal) {
+        cartModal.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+                cartModal.style.display = 'none';
+            }
+        });
+    }
+
+    // Checkout button
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', () => {
+            cartModal.style.display = 'none';
+            openCheckoutModal();
+        });
+    }
+
+    // Open checkout modal with cart summary
+    function openCheckoutModal() {
+        const orderModal = document.getElementById('orderModal');
+        
+        if (cart.length === 0) return;
+        
+        // Update order summary display
+        updateOrderSummaryDisplay();
+        
+        // Show modal
+        orderModal.style.display = 'flex';
+    }
+
+    // Initialize cart UI and delivery options
+    updateCartUI();
+    setupDeliveryOptions();
+
+    // Gmail Order Form Submission
+    const gmailOrderForm = document.getElementById('gmailOrderForm');
+    if (gmailOrderForm) {
+        gmailOrderForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const customerName = document.getElementById('customerName').value;
+            const customerEmail = document.getElementById('customerEmail').value;
+            const customerPhone = document.getElementById('customerPhone').value;
+            const deliveryAddress = document.getElementById('deliveryAddress').value;
+            const restaurantLocation = document.getElementById('restaurantLocation').value;
+            const preferredTime = document.getElementById('preferredTime').value;
+            const specialInstructions = document.getElementById('specialInstructions').value;
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            
+            // Validate required fields based on order type
+            if (orderType === 'delivery' && !deliveryAddress.trim()) {
+                alert("Please enter your delivery address.");
+                return;
+            }
+            
+            if (orderType === 'dinein' && !restaurantLocation) {
+                alert("Please select a restaurant location.");
+                return;
+            }
+            
+            if (!preferredTime) {
+                alert("Please select your preferred time.");
+                return;
+            }
+            
+            if (!agreeTerms) {
+                alert("Please agree to receive order confirmation via email.");
+                return;
+            }
+            
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(customerEmail)) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+            
+            // Calculate totals
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const deliveryFee = orderType === 'delivery' ? DELIVERY_FEE : 0;
+            const total = subtotal + deliveryFee;
+            
+            // Build email body
+            let emailBody = `NEW ORDER - Slice House Pizza\n\n`;
+            emailBody += `Customer Information:\n`;
+            emailBody += `----------------------\n`;
+            emailBody += `Name: ${customerName}\n`;
+            emailBody += `Email: ${customerEmail}\n`;
+            emailBody += `Phone: ${customerPhone}\n`;
+            emailBody += `Order Type: ${orderType === 'delivery' ? 'Delivery' : 'Dine-in'}\n`;
+            
+            if (orderType === 'delivery') {
+                emailBody += `Delivery Address: ${deliveryAddress}\n`;
+            } else {
+                emailBody += `Restaurant Location: ${restaurantLocation}\n`;
+            }
+            
+            emailBody += `Preferred Time: ${preferredTime}\n`;
+            
+            if (specialInstructions.trim()) {
+                emailBody += `Special Instructions: ${specialInstructions}\n`;
+            }
+            
+            emailBody += `\nOrder Details:\n`;
+            emailBody += `---------------\n`;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                emailBody += `${item.quantity} × ${item.name} (${item.size}): $${itemTotal.toFixed(2)}\n`;
+            });
+            
+            emailBody += `\nOrder Summary:\n`;
+            emailBody += `---------------\n`;
+            emailBody += `Subtotal: $${subtotal.toFixed(2)}\n`;
+            
+            if (orderType === 'delivery') {
+                emailBody += `Delivery Fee: $${DELIVERY_FEE.toFixed(2)}\n`;
+            }
+            
+            emailBody += `Total: $${total.toFixed(2)}\n`;
+            emailBody += `\nOrder Date: ${new Date().toLocaleString()}\n`;
+            emailBody += `\n---\n`;
+            emailBody += `This order was placed through the Slice House website.`;
+            
+            // Set email subject and body
+            document.getElementById('emailSubject').value = `Slice House Order - ${customerName} - $${total.toFixed(2)}`;
+            document.getElementById('emailBody').value = emailBody;
+            
+            // Show confirmation message
+            alert("Your email client will now open with your order details.\n\nPlease review the information and click 'Send' to complete your order.\n\nYou will receive a confirmation email from us shortly.");
+            
+            // Submit the form (opens email client)
+            // Note: We need to submit programmatically after a short delay to allow alert to show
+            setTimeout(() => {
+                // First, clear the cart
+                cart = [];
+                localStorage.removeItem('cart');
+                updateCartUI();
+                
+                // Then submit the form
+                this.submit();
+                
+                // Close modal after submission
+                const orderModal = document.getElementById('orderModal');
+                orderModal.style.display = 'none';
+                
+                // Reset form
+                this.reset();
+                
+                // Reset to default delivery option
+                document.querySelector('.delivery-option[data-type="dinein"]').click();
+            }, 100);
+        });
+    }
+
+    // Update order summary when form fields change
+    document.querySelectorAll('#customerName, #customerEmail, #customerPhone, #deliveryAddress, #restaurantLocation, #preferredTime, #specialInstructions').forEach(field => {
+        field.addEventListener('input', updateOrderSummaryDisplay);
+    });
+
+    // Existing modal functionality
+    const orderOnlineBtn = document.getElementById('orderOnlineBtn');
+    const footerOrderBtn = document.getElementById('footerOrderBtn');
+    const closeModal = document.querySelector('.close-modal');
+
+    if (orderOnlineBtn) {
+        orderOnlineBtn.addEventListener('click', () => {
+            if (cart.length > 0) {
+                openCheckoutModal();
+            } else {
+                const orderModal = document.getElementById('orderModal');
+                orderModal.style.display = 'flex';
+            }
+        });
+    }
+
+    if (footerOrderBtn) {
+        footerOrderBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (cart.length > 0) {
+                openCheckoutModal();
+            } else {
+                const orderModal = document.getElementById('orderModal');
+                orderModal.style.display = 'flex';
+            }
+        });
+    }
+
+    if (closeModal) {
+        closeModal.addEventListener('click', () => {
+            const orderModal = document.getElementById('orderModal');
+            orderModal.style.display = 'none';
+        });
+    }
+
+    // Close modals with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const cartModal = document.getElementById('cartModal');
+            const orderModal = document.getElementById('orderModal');
+            
+            if (cartModal && cartModal.style.display === 'flex') {
+                cartModal.style.display = 'none';
+            }
+            if (orderModal && orderModal.style.display === 'flex') {
+                orderModal.style.display = 'none';
+            }
+        }
+    });
+    </script>
+</body>
+</html>
